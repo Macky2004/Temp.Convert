@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter | MadhanKumar K</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradient-flow {
+            background: linear-gradient(270deg, #ec4899, #3b82f6, #f97316, #8b5cf6);
+            background-size: 800% 800%;
+            animation: gradientFlow 10s ease infinite;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-flow flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white bg-opacity-80 shadow-md">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-pink-500 via-sky-400 to-orange-400 bg-clip-text text-transparent">TempConvert</span>
+                </div>
+                <div class="flex space-x-4">
+                    <button onclick="showPage('converter')" class="px-3 py-2 rounded-md text-sm font-medium bg-pink-100 text-pink-700 hover:bg-pink-200 transition-all">Converter</button>
+                    <button onclick="showPage('about')" class="px-3 py-2 rounded-md text-sm font-medium bg-sky-100 text-sky-700 hover:bg-sky-200 transition-all">About</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <!-- Converter Page -->
+        <div id="converter-page" class="w-full max-w-md">
+            <div class="bg-white bg-opacity-90 rounded-xl shadow-xl overflow-hidden transition-all card-hover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-pink-500 via-sky-400 to-orange-400 bg-clip-text text-transparent">Temperature Converter</h2>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="temperature">
+                            Temperature Value
+                        </label>
+                        <input type="number" id="temperature" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter temperature">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="from-unit">
+                                From Unit
+                            </label>
+                            <select id="from-unit" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="celsius">Celsius (°C)</option>
+                                <option value="fahrenheit">Fahrenheit (°F)</option>
+                                <option value="kelvin">Kelvin (K)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="to-unit">
+                                To Unit
+                            </label>
+                            <select id="to-unit" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="fahrenheit">Fahrenheit (°F)</option>
+                                <option value="celsius">Celsius (°C)</option>
+                                <option value="kelvin">Kelvin (K)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button onclick="convertTemperature()" class="w-full bg-gradient-to-r from-pink-500 to-sky-500 hover:from-pink-600 hover:to-sky-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all">
+                        Convert
+                    </button>
+                    
+                    <div id="result" class="mt-6 p-4 bg-gray-100 rounded-lg hidden">
+                        <h3 class="font-bold text-lg mb-2">Result</h3>
+                        <p id="result-text" class="text-gray-800"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="w-full max-w-2xl hidden">
+            <div class="bg-white bg-opacity-90 rounded-xl shadow-xl overflow-hidden transition-all card-hover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-pink-500 via-sky-400 to-orange-400 bg-clip-text text-transparent">About Temperature Converter</h2>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Welcome to TempConvert!</h3>
+                        <p class="text-gray-700 mb-4">
+                            TempConvert is your ultimate temperature conversion solution, allowing instant conversions between Celsius, Fahrenheit, and Kelvin scales with scientific precision. Our dynamic interface makes temperature conversion effortless and enjoyable.
+                        </p>
+                        
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Key Benefits</h3>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-2 mb-4">
+                            <li><strong>Instant Results:</strong> Get accurate conversions in milliseconds</li>
+                            <li><strong>Universal Compatibility:</strong> Works perfectly across all devices</li>
+                            <li><strong>Educational Value:</strong> Learn temperature relationships through practical use</li>
+                            <li><strong>No Installation:</strong> Access directly from any web browser</li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Practical Uses</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="p-3 rounded-lg bg-pink-50">
+                                <h4 class="font-bold text-pink-700 mb-1">Cooking & Baking</h4>
+                                <p class="text-sm">Convert oven temperatures between Fahrenheit and Celsius for perfect recipes</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-sky-50">
+                                <h4 class="font-bold text-sky-700 mb-1">Scientific Research</h4>
+                                <p class="text-sm">Accurate temperature conversions for lab experiments and data analysis</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-orange-50">
+                                <h4 class="font-bold text-orange-700 mb-1">Weather Tracking</h4>
+                                <p class="text-sm">Understand weather forecasts in your preferred temperature scale</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-purple-50">
+                                <h4 class="font-bold text-purple-700 mb-1">Travel Planning</h4>
+                                <p class="text-sm">Convert destination temperatures when traveling between countries</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Conversion Formulas</h3>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                            <li><strong>Celsius to Fahrenheit:</strong> °F = (°C × 9/5) + 32</li>
+                            <li><strong>Fahrenheit to Celsius:</strong> °C = (°F - 32) × 5/9</li>
+                            <li><strong>Celsius to Kelvin:</strong> K = °C + 273.15</li>
+                            <li><strong>Kelvin to Celsius:</strong> °C = K - 273.15</li>
+                            <li><strong>Fahrenheit to Kelvin:</strong> K = (°F - 32) × 5/9 + 273.15</li>
+                            <li><strong>Kelvin to Fahrenheit:</strong> °F = (K - 273.15) × 9/5 + 32</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Developer Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                            <div>
+                                <p><strong>Name:</strong> MadhanKumar K</p>
+                                <p><strong>Email:</strong> itskm2004@gmail.com</p>
+                                <p><strong>Phone:</strong> 8248501659</p>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-end">
+                                <div class="w-24 h-24 rounded-full bg-gradient-to-r from-pink-500 via-sky-400 to-orange-400 flex items-center justify-center text-white text-4xl font-bold">
+                                    MK
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white bg-opacity-80 py-4 shadow-inner">
+        <div class="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>© 2023 Temperature Converter. Created by MadhanKumar K (itskm2004@gmail.com | 8248501659)</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show the converter page by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('converter');
+        });
+
+        // Function to toggle between pages
+        function showPage(page) {
+            if (page === 'converter') {
+                document.getElementById('converter-page').classList.remove('hidden');
+                document.getElementById('about-page').classList.add('hidden');
+            } else if (page === 'about') {
+                document.getElementById('converter-page').classList.add('hidden');
+                document.getElementById('about-page').classList.remove('hidden');
+            }
+        }
+
+        // Function to convert temperature
+        function convertTemperature() {
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const fromUnit = document.getElementById('from-unit').value;
+            const toUnit = document.getElementById('to-unit').value;
+            
+            if (isNaN(temperature)) {
+                alert('Please enter a valid temperature value');
+                return;
+            }
+            
+            let result;
+            
+            // Convert to Celsius first (as intermediate step)
+            let celsius;
+            switch (fromUnit) {
+                case 'celsius':
+                    celsius = temperature;
+                    break;
+                case 'fahrenheit':
+                    celsius = (temperature - 32) * 5/9;
+                    break;
+                case 'kelvin':
+                    celsius = temperature - 273.15;
+                    break;
+            }
+            
+            // Convert from Celsius to target unit
+            switch (toUnit) {
+                case 'celsius':
+                    result = celsius;
+                    break;
+                case 'fahrenheit':
+                    result = (celsius * 9/5) + 32;
+                    break;
+                case 'kelvin':
+                    result = celsius + 273.15;
+                    break;
+            }
+            
+            // Round to 2 decimal places
+            result = Math.round(result * 100) / 100;
+            
+            // Display the result
+            const resultElement = document.getElementById('result');
+            const resultText = document.getElementById('result-text');
+            
+            resultText.textContent = `${temperature} ${getUnitSymbol(fromUnit)} = ${result} ${getUnitSymbol(toUnit)}`;
+            resultElement.classList.remove('hidden');
+        }
+        
+        // Helper function to get unit symbols
+        function getUnitSymbol(unit) {
+            switch (unit) {
+                case 'celsius': return '°C';
+                case 'fahrenheit': return '°F';
+                case 'kelvin': return 'K';
+                default: return '';
+            }
+        }
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=kumar500/temper-calc" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</html>
